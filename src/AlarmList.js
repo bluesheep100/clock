@@ -1,6 +1,8 @@
 import React, {Component} from "react";
-import {Alert, FlatList, Modal, Pressable, StyleSheet, View, Text} from 'react-native';
-import Alarm from "./Alarm";
+import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
+import Modal from 'react-native-modal';
+import TimeInput from './TimeInput';
+import Alarm from './Alarm';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
@@ -24,18 +26,33 @@ const DATA = [
 
 class AlarmList extends Component {
     state = {
-        alarms: DATA,
+        alarms: [],
+        time: null,
         modalVisible: false,
     }
 
-    componentDidMount() {
-        // AsyncStorage.getItem('alarms').then(value => {
-        //     this.setState({alarms: JSON.parse(value)})
-        // });
+    constructor(props) {
+        super(props);
+
+        this.timeInput = React.createRef();
     }
 
-    setModalVisible = value => {
-        this.setState({modalVisible: value});
+    componentDidMount() {
+        AsyncStorage.getItem('alarms').then(value => {
+            this.setState({alarms: JSON.parse(value)})
+        });
+    }
+
+    saveData() {
+        AsyncStorage.setItem('alarms', JSON.stringify(this.state.alarms));
+    }
+
+    toggleModal = () => {
+        this.setState({modalVisible: !this.state.modalVisible});
+    }
+
+    focusHours = () => {
+        this.timeInput.current.focusHours();
     }
 
     renderItem({item}) {
@@ -45,22 +62,23 @@ class AlarmList extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={this.state.modalVisible}
-                    onRequestClose={() => {
-                        Alert.alert("Modal has been closed.");
-                        this.setModalVisible(false);
-                    }}
-                >
-                    <View style={styles.centeredView}>
-                        <View style={styles.modalView}>
-                            <Pressable
-                                style={styles.button}
-                                onPress={() => this.setModalVisible(false)}
-                            >
-                                <Text>Hide</Text>
+                <Modal isVisible={this.state.modalVisible} onModalWillHide={() => this.timeInput.current.blur()}
+                       onShow={() => {
+                           setTimeout(() => {
+                               this.focusHours();
+                           }, 100);
+                       }}>
+                    <View style={styles.modalView}>
+                        <View style={{margin: 30}}>
+                            <TimeInput ref={this.timeInput}/>
+                        </View>
+
+                        <View style={styles.modalFooter}>
+                            <Pressable style={styles.modalBtn} onPress={this.toggleModal}>
+                                <Text style={{color: '#7fdbca', fontSize: 14}}>Cancel</Text>
+                            </Pressable>
+                            <Pressable style={styles.modalBtn} onPress={this.toggleModal}>
+                                <Text style={{color: '#7fdbca', fontSize: 14}}>OK</Text>
                             </Pressable>
                         </View>
                     </View>
@@ -74,11 +92,13 @@ class AlarmList extends Component {
 
                 <View style={styles.newAlarmView}>
                     <Pressable
-                        style={[styles.button]}
-                        onPress={() => this.setModalVisible(true)}
+                        style={({pressed}) => [
+                            styles.button,
+                            pressed ? {backgroundColor: '#4c6497'} : {},
+                        ]}
+                        onPress={this.toggleModal}
                     >
-                        <Ionicons name="add-circle-outline" color="white" size={32}/>
-                        {/*<Text style={{color: '#fff'}}>Show Modal</Text>*/}
+                        <Ionicons name="add-circle-outline" color="white" size={36}/>
                     </Pressable>
                 </View>
             </View>
@@ -103,26 +123,23 @@ const styles = StyleSheet.create({
         marginRight: 20,
         marginBottom: 20,
     },
-    centeredView: {
-        flex: 1,
-        justifyContent: "flex-end",
-        alignItems: "center",
-        marginTop: 22
-    },
     modalView: {
-        margin: 20,
-        backgroundColor: "white",
         borderRadius: 10,
-        padding: 35,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5
+        alignSelf: 'center',
+        backgroundColor: '#0b2942',
+    },
+    modalFooter: {
+        flexDirection: 'row',
+        alignSelf: 'flex-end',
+        justifyContent: 'flex-end',
+        paddingEnd: 10,
+        paddingBottom: 10,
+    },
+    modalText: {
+        color: '#fefefe',
+    },
+    modalBtn: {
+        padding: 10,
     },
 });
 
