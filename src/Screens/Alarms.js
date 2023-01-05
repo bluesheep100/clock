@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
-import AlarmList from "../AlarmList";
+import AlarmList from "../Components/AlarmList";
+import Colors from '../Support/ColorPalette';
 
 class Alarms extends Component {
     render() {
@@ -14,7 +15,7 @@ class Alarms extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#011627',
+        backgroundColor: Colors.background,
         paddingTop: 10,
         flex: 1,
     }

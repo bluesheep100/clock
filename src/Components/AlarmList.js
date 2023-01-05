@@ -3,6 +3,7 @@ import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
 import Modal from 'react-native-modal';
 import TimeInput from './TimeInput';
 import Alarm from './Alarm';
+import Colors from '../Support/ColorPalette';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
@@ -75,10 +76,10 @@ class AlarmList extends Component {
 
                         <View style={styles.modalFooter}>
                             <Pressable style={styles.modalBtn} onPress={this.toggleModal}>
-                                <Text style={{color: '#7fdbca', fontSize: 14}}>Cancel</Text>
+                                <Text style={{color: Colors.accent, fontSize: 14}}>Cancel</Text>
                             </Pressable>
                             <Pressable style={styles.modalBtn} onPress={this.toggleModal}>
-                                <Text style={{color: '#7fdbca', fontSize: 14}}>OK</Text>
+                                <Text style={{color: Colors.accent, fontSize: 14}}>OK</Text>
                             </Pressable>
                         </View>
                     </View>
@@ -94,11 +95,11 @@ class AlarmList extends Component {
                     <Pressable
                         style={({pressed}) => [
                             styles.button,
-                            pressed ? {backgroundColor: '#4c6497'} : {},
+                            pressed ? {backgroundColor: Colors.buttonPressed} : {},
                         ]}
                         onPress={this.toggleModal}
                     >
-                        <Ionicons name="add-circle-outline" color="#7fdbca" size={36}/>
+                        <Ionicons name="add-circle-outline" color={Colors.accent} size={36}/>
                     </Pressable>
                 </View>
             </View>
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     button: {
-        backgroundColor: '#13344f',
+        backgroundColor: Colors.button,
         borderRadius: 10,
         padding: 5,
         elevation: 2
@@ -124,9 +125,9 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     modalView: {
+        backgroundColor: Colors.backgroundTwo,
         borderRadius: 10,
         alignSelf: 'center',
-        backgroundColor: '#0b2942',
     },
     modalFooter: {
         flexDirection: 'row',
@@ -134,9 +135,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         paddingEnd: 10,
         paddingBottom: 10,
-    },
-    modalText: {
-        color: '#fefefe',
     },
     modalBtn: {
         padding: 10,

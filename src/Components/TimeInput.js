@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
+import Colors from "../Support/ColorPalette";
 
 class TimeInput extends Component {
     state = {
@@ -57,9 +58,9 @@ class TimeInput extends Component {
                         textAlign="center"
                         style={[styles.input, this.hoursField.current?.isFocused() ? styles.focused : {}]}
                     />
-                    <Text style={{fontSize: 12, color: '#fff'}}>Hour</Text>
+                    <Text style={{fontSize: 12, color: Colors.text}}>Hour</Text>
                 </View>
-                <Text style={{fontSize: 42, marginHorizontal: 5, color: '#5f7e97'}}>:</Text>
+                <Text style={{fontSize: 58, marginHorizontal: 5, color: Colors.textDark}}>:</Text>
                 <View>
                     <TextInput
                         onChangeText={(text) => {
@@ -74,7 +75,7 @@ class TimeInput extends Component {
                         textAlign="center"
                         style={[styles.input, this.minutesField.current?.isFocused() ? styles.focused : {}]}
                     />
-                    <Text style={{fontSize: 12, color: '#fff'}}>Minute</Text>
+                    <Text style={{fontSize: 12, color: Colors.text}}>Minute</Text>
                 </View>
             </View>
         );
@@ -87,8 +88,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     input: {
-        color: '#fff',
-        backgroundColor: '#5f7e9790',
+        color: Colors.text,
+        backgroundColor: Colors.input,
         width: 85,
         height: 90,
         borderRadius: 5,
@@ -97,9 +98,9 @@ const styles = StyleSheet.create({
         fontSize: 46,
     },
     focused: {
-        color: '#5f7e97',
-        backgroundColor: '#0b2942',
-        borderColor: '#7fdbca',
+        color: Colors.textDark,
+        backgroundColor: Colors.backgroundTwo,
+        borderColor: Colors.accent,
         borderWidth: 1,
     }
 });

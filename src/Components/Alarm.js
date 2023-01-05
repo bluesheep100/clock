@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {StyleSheet, Text, View, Pressable, Switch} from 'react-native';
+import Colors from '../Support/ColorPalette';
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 class Alarm extends Component
@@ -28,8 +29,8 @@ class Alarm extends Component
                 </View>
                 <View style={{flex: 1}}>
                     <Switch
-                        trackColor={{ false: "#011627", true: "#084d81" }}
-                        thumbColor={this.state.isEnabled ? "#7fdbca" : "#f4f3f4"}
+                        trackColor={{ false: Colors.switchTrack, true: Colors.switchTrackActive }}
+                        thumbColor={this.state.isEnabled ? Colors.switchThumbActive : Colors.switchThumb}
                         onValueChange={this.toggleEnabled}
                         value={this.state.isEnabled}
                     />
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     alarm: {
         display: 'flex',
         flexDirection: 'row',
-        backgroundColor: '#0b2942',
+        backgroundColor: Colors.backgroundTwo,
         padding: 12,
         borderRadius: 10,
         marginVertical: 4,
@@ -51,10 +52,10 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 40,
-        color: '#fff',
+        color: Colors.text,
     },
     text: {
-        color: '#fff',
+        color: Colors.text,
     },
     deleteBtn: {
         marginTop: 10,

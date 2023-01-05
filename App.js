@@ -3,6 +3,7 @@ import {StatusBar, StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {NavigationContainer} from "@react-navigation/native";
 import Ionicons from '@expo/vector-icons/Ionicons';
+import Colors from './src/Support/ColorPalette';
 import Stopwatch from "./src/Screens/Stopwatch";
 import Settings from "./src/Screens/Settings";
 import Alarms from "./src/Screens/Alarms";
@@ -18,22 +19,22 @@ class App extends Component {
             <NavigationContainer>
                 <Tab.Navigator screenOptions={{
                     headerShown: false,
-                    tabBarActiveTintColor: '#7fdbca',
-                    tabBarActiveBackgroundColor: '#13344f',
+                    tabBarActiveTintColor: Colors.accent,
+                    tabBarActiveBackgroundColor: Colors.active,
                     tabBarLabelStyle: {fontSize: 12, marginBottom: 5},
-                    tabBarStyle: {backgroundColor: '#011627', borderTopColor: '#000'},
+                    tabBarStyle: {backgroundColor: Colors.background, borderTopColor: 'black'},
                 }} sceneContainerStyle={styles.container}>
                     <Tab.Screen name="Alarms" component={Alarms} options={{
-                        tabBarIcon: () => <Ionicons name="alarm-outline" size={24} color="#f0f0f0"/>
+                        tabBarIcon: () => <Ionicons name="alarm-outline" size={24} color={Colors.text}/>
                     }}/>
                     <Tab.Screen name="Stopwatch" component={Stopwatch} options={{
-                        tabBarIcon: () => <Ionicons name="stopwatch-outline" size={24} color="#f0f0f0"/>
+                        tabBarIcon: () => <Ionicons name="stopwatch-outline" size={24} color={Colors.text}/>
                     }}/>
                     <Tab.Screen name="Timer" component={Timer} options={{
-                        tabBarIcon: () => <Ionicons name="hourglass-outline" size={24} color="#f0f0f0"/>
+                        tabBarIcon: () => <Ionicons name="hourglass-outline" size={24} color={Colors.text}/>
                     }}/>
                     <Tab.Screen name="Settings" component={Settings} options={{
-                        tabBarIcon: () => <Ionicons name="settings-outline" size={24} color="#f0f0f0"/>
+                        tabBarIcon: () => <Ionicons name="settings-outline" size={24} color={Colors.text}/>
                     }}/>
                 </Tab.Navigator>
             </NavigationContainer>
