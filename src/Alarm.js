@@ -29,7 +29,7 @@ class Alarm extends Component
                 <View style={{flex: 1}}>
                     <Switch
                         trackColor={{ false: "#011627", true: "#084d81" }}
-                        thumbColor={this.state.isEnabled ? "#81b0ff" : "#f4f3f4"}
+                        thumbColor={this.state.isEnabled ? "#7fdbca" : "#f4f3f4"}
                         onValueChange={this.toggleEnabled}
                         value={this.state.isEnabled}
                     />

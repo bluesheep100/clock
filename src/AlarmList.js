@@ -98,7 +98,7 @@ class AlarmList extends Component {
                         ]}
                         onPress={this.toggleModal}
                     >
-                        <Ionicons name="add-circle-outline" color="white" size={36}/>
+                        <Ionicons name="add-circle-outline" color="#7fdbca" size={36}/>
                     </Pressable>
                 </View>
             </View>
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     button: {
-        backgroundColor: '#82aaff',
+        backgroundColor: '#13344f',
         borderRadius: 10,
         padding: 5,
         elevation: 2
