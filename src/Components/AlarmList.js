@@ -3,32 +3,33 @@ import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
 import Modal from 'react-native-modal';
 import TimeInput from './TimeInput';
 import Alarm from './Alarm';
+import uuid from 'react-native-uuid';
 import Colors from '../Support/ColorPalette';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 const DATA = [
     {
-        id: '1',
-        time: '8:00',
-        enabled: true,
+        id: 1,
+        time: '7:00',
+        isEnabled: true,
     },
     {
-        id: '2',
-        time: '8:05',
-        enabled: true,
+        id: 2,
+        time: '7:05',
+        isEnabled: true,
     },
     {
-        id: '3',
-        time: '8:10',
-        enabled: false,
+        id: 3,
+        time: '7:10',
+        isEnabled: false,
     },
 ];
 
 class AlarmList extends Component {
     state = {
         alarms: [],
-        time: null,
+        time: '00:00',
         modalVisible: false,
     }
 
@@ -44,7 +45,7 @@ class AlarmList extends Component {
         });
     }
 
-    saveData() {
+    saveAlarms() {
         AsyncStorage.setItem('alarms', JSON.stringify(this.state.alarms));
     }
 
@@ -56,8 +57,31 @@ class AlarmList extends Component {
         this.timeInput.current.focusHours();
     }
 
-    renderItem({item}) {
-        return (<Alarm time={item.time} enabled={item.enabled}/>)
+    setTime = (time) => {
+        this.setState({time});
+    }
+
+    createAlarm = () => {
+        this.toggleModal();
+
+        this.setState(
+            {alarms: [...this.state.alarms, {id: uuid.v4(), time: this.state.time, isEnabled: true}]},
+            () => this.saveAlarms()
+        );
+    }
+
+    updateAlarm = (newData) => {
+        const alarms = this.state.alarms.map((alarm) => {
+            return alarm.id === newData.id ? newData : alarm;
+        });
+        this.setState({alarms}, () => this.saveAlarms());
+    }
+
+    deleteAlarm = (deleted) => {
+        const alarms = this.state.alarms.filter((alarm) => {
+            return alarm.id !== deleted.id;
+        });
+        this.setState({alarms});
     }
 
     render() {
@@ -71,14 +95,14 @@ class AlarmList extends Component {
                        }}>
                     <View style={styles.modalView}>
                         <View style={{margin: 30}}>
-                            <TimeInput ref={this.timeInput}/>
+                            <TimeInput ref={this.timeInput} onChange={this.setTime}/>
                         </View>
 
                         <View style={styles.modalFooter}>
                             <Pressable style={styles.modalBtn} onPress={this.toggleModal}>
                                 <Text style={{color: Colors.accent, fontSize: 14}}>Cancel</Text>
                             </Pressable>
-                            <Pressable style={styles.modalBtn} onPress={this.toggleModal}>
+                            <Pressable style={styles.modalBtn} onPress={this.createAlarm}>
                                 <Text style={{color: Colors.accent, fontSize: 14}}>OK</Text>
                             </Pressable>
                         </View>
@@ -87,7 +111,7 @@ class AlarmList extends Component {
 
                 <FlatList
                     data={this.state.alarms}
-                    renderItem={this.renderItem}
+                    renderItem={({item}) => (<Alarm alarm={item} onChange={this.updateAlarm} onDelete={this.deleteAlarm}/>)}
                     keyExtractor={item => item.id}
                 />
 

@@ -18,6 +18,7 @@ class App extends Component {
         return (
             <NavigationContainer>
                 <Tab.Navigator screenOptions={{
+                    tabBarHideOnKeyboard: true,
                     headerShown: false,
                     tabBarActiveTintColor: Colors.accent,
                     tabBarActiveBackgroundColor: Colors.active,

@@ -1,31 +1,35 @@
 import React, {Component} from "react";
-import {StyleSheet, Text, View, Pressable, Switch} from 'react-native';
+import {StyleSheet, Text, View, Pressable, Animated, Switch} from 'react-native';
 import Colors from '../Support/ColorPalette';
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 class Alarm extends Component
 {
     state = {
-        isEnabled: this.props.enabled,
+        ...this.props.alarm,
     }
 
     toggleEnabled = (newState) => {
-        this.setState({isEnabled: newState});
+        this.setState({isEnabled: newState}, () => this.props.onChange(this.state));
+    }
+
+    buttonAnim = () => {
+
     }
 
     render() {
         return(
             <View style={styles.alarm}>
                 <View style={{flex: 1}}>
-                    <Text style={styles.title}>{this.props.time}</Text>
+                    <Text style={styles.title}>{this.state.time}</Text>
                     <Text style={styles.text}>Mon, Tue, Wed, Thu, Fri</Text>
 
-                    {/*<Pressable style={styles.deleteBtn}>*/}
-                    {/*    <Text style={{color: '#fff', fontWeight: 'bold', fontSize: 16}}>*/}
-                    {/*        <Ionicons name="trash-outline" size={18} color="#f0f0f0"/>*/}
-                    {/*        Delete*/}
-                    {/*    </Text>*/}
-                    {/*</Pressable>*/}
+                    <Pressable style={styles.deleteBtn} onPress={() => this.props.onDelete(this.state)}>
+                        <Text style={{color: Colors.text, fontSize: 16}}>
+                            <Ionicons name="trash-outline" size={18} color={Colors.text}/>
+                            Delete
+                        </Text>
+                    </Pressable>
                 </View>
                 <View style={{flex: 1}}>
                     <Switch

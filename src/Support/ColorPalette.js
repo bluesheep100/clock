@@ -12,6 +12,10 @@ const ColorPalette = {
     switchThumb       : '#f4f3f4',
     switchThumbActive : '#7fdbca',
     input             : '#5f7e9790',
+
+    primary           : '#5863ab',
+    secondary         : '#4b525a',
+    danger            : '#ef5350',
 }
 
 export default ColorPalette;

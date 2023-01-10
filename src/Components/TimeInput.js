@@ -16,6 +16,10 @@ class TimeInput extends Component {
         this.focusMinutes = this.focusMinutes.bind(this);
     }
 
+    handleChange() {
+        this.props.onChange(`${this.state.hours}:${this.state.minutes}`);
+    }
+
     focusMinutes(text) {
         if (text.length === 2) {
             this.minutesField.current.focus();
@@ -42,11 +46,7 @@ class TimeInput extends Component {
                 <View>
                     <TextInput
                         onChangeText={(text) => {
-                            if (Number.parseInt(text) > 24) {
-                                this.setState({hours: '24'});
-                            } else {
-                                this.setState({hours: text});
-                            }
+                            this.setState({hours: text}, () => this.handleChange());
                             this.focusMinutes(text);
                         }}
                         onBlur={() => this.setState({hours: this.onBlur(this.state.hours)})}
@@ -64,7 +64,7 @@ class TimeInput extends Component {
                 <View>
                     <TextInput
                         onChangeText={(text) => {
-                            this.setState({minutes: text});
+                            this.setState({minutes: text}, () => this.handleChange());
                         }}
                         onBlur={() => this.setState({minutes: this.onBlur(this.state.minutes)})}
                         ref={this.minutesField}
