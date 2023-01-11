@@ -41,7 +41,7 @@ class AlarmList extends Component {
 
     componentDidMount() {
         AsyncStorage.getItem('alarms').then(value => {
-            this.setState({alarms: JSON.parse(value)})
+            this.setState({alarms: JSON.parse(value) || []})
         });
     }
 
