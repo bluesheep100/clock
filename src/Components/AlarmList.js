@@ -1,8 +1,9 @@
 import React, {Component} from "react";
-import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Pressable, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Modal from 'react-native-modal';
 import TimeInput from './TimeInput';
 import Alarm from './Alarm';
+import * as Notifications from 'expo-notifications';
 import uuid from 'react-native-uuid';
 import Colors from '../Support/ColorPalette';
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -84,9 +85,33 @@ class AlarmList extends Component {
         this.setState({alarms});
     }
 
+    fonni = async () => {
+        const time = (new Date());
+        time.setMinutes(32);
+        time.setSeconds(0);
+
+        await Notifications.scheduleNotificationAsync({
+            content: {
+                title: 'Woot',
+                body: 'A notification :O',
+            },
+
+            trigger: {
+                channelId: 'alarms',
+                seconds: 2,
+                // date: time,
+            },
+        });
+
+        console.log(time);
+    }
+
     render() {
         return (
             <View style={styles.container}>
+                <TouchableOpacity style={styles.button} onPress={() => this.fonni()} activeOpacity={0.5}>
+                    <Text style={{color: Colors.text}}>Weehee</Text>
+                </TouchableOpacity>
                 <Modal isVisible={this.state.modalVisible} onModalWillHide={() => this.timeInput.current.blur()}
                        onShow={() => {
                            setTimeout(() => {

@@ -9,11 +9,38 @@ import Stopwatch from "./src/Screens/Stopwatch";
 import Settings from "./src/Screens/Settings";
 import Alarms from "./src/Screens/Alarms";
 import Timer from "./src/Screens/Timer";
+import * as TaskManager from 'expo-task-manager';
+import * as Notifications from "expo-notifications";
 
 const Tab = createBottomTabNavigator();
 
+Notifications.requestPermissionsAsync();
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+        priority: Notifications.AndroidNotificationPriority.MAX,
+    }),
+});
+
 class App extends Component {
     state = {};
+
+    async componentDidMount() {
+        await Notifications.setNotificationChannelAsync('alarms', {
+            name: 'Alarms',
+            importance: Notifications.AndroidImportance.MAX,
+            lockscreenVisibility: Notifications.AndroidNotificationVisibility.PUBLIC,
+            vibrationPattern: [250,0,250,0],
+            enableVibrate: true,
+            enableLights: true,
+            bypassDnd: true,
+        });
+
+        // console.log((await Notifications.getNotificationChannelAsync('alarms')).vibrationPattern);
+    }
 
     render() {
         return (

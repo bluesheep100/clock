@@ -53,7 +53,7 @@ class TimeInput extends Component {
                         selectTextOnFocus={true}
                         ref={this.hoursField}
                         value={this.state.hours}
-                        keyboardType="numeric"
+                        keyboardType="phone-pad"
                         maxLength={2}
                         textAlign="center"
                         style={[styles.input, this.hoursField.current?.isFocused() ? styles.focused : {}]}
@@ -70,7 +70,7 @@ class TimeInput extends Component {
                         ref={this.minutesField}
                         value={this.state.minutes}
                         selectTextOnFocus={true}
-                        keyboardType="numeric"
+                        keyboardType="phone-pad"
                         maxLength={2}
                         textAlign="center"
                         style={[styles.input, this.minutesField.current?.isFocused() ? styles.focused : {}]}

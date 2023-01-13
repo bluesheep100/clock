@@ -1,13 +1,18 @@
 import React, {Component} from "react";
-import {SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView, Vibration, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Colors from '../Support/ColorPalette';
 
 class Button extends Component {
+    triggerPress = () => {
+        Vibration.vibrate(40);
+        this.props.onPress();
+    }
+
     render() {
         return (
             <TouchableOpacity style={[styles.button, {...this.props.style}]} activeOpacity={0.5}
-                              onPress={this.props.onPress}>
+                              onPress={this.triggerPress}>
                 <Text style={styles.btnText}>{this.props.text}</Text>
             </TouchableOpacity>
         );
