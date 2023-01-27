@@ -103,7 +103,7 @@ class AlarmList extends Component {
             },
         });
 
-        console.log(time);
+        // console.log(time);
     }
 
     render() {
